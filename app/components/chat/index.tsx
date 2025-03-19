@@ -120,7 +120,7 @@ const Chat: FC<IChatProps> = ({
   return (
     <div className={cn(!feedbackDisabled && 'px-3.5', 'h-full')}>
       {/* Chat List */}
-      <div className="h-full space-y-[30px]">
+      <div className="h-[100%] space-y-[30px]">
         {chatList.map((item) => {
           if (item.isAnswer) {
             const isLast = item.id === chatList[chatList.length - 1].id
@@ -145,8 +145,9 @@ const Chat: FC<IChatProps> = ({
       </div>
       {
         !isHideSendInput && (
-          <div className={cn(!feedbackDisabled && '!left-3.5 !right-3.5', 'absolute z-10 bottom-0 left-0 right-0')}>
-            <div className='p-[5.5px] max-h-[150px] bg-white border-[1.5px] border-gray-200 rounded-xl overflow-y-auto'>
+          <div className={cn(!feedbackDisabled && '', 'fixed z-10 bottom-0 pb-4 !left-[244px] right-3.5')}
+            style={{ backgroundColor: '#ffffff' }}>
+            <div className='relative p-[5.5px] max-w-[720px] mx-auto max-h-[150px] bg-white border-[1.5px] border-gray-200 rounded-xl overflow-y-auto'>
               {
                 visionConfig?.enabled && (
                   <>
@@ -175,6 +176,7 @@ const Chat: FC<IChatProps> = ({
                   block w-full px-2 pr-[118px] py-[7px] leading-5 max-h-none text-sm text-gray-700 outline-none appearance-none resize-none
                   ${visionConfig?.enabled && 'pl-12'}
                 `}
+                placeholder="和机器人聊天"
                 value={query}
                 onChange={handleContentChange}
                 onKeyUp={handleKeyUp}

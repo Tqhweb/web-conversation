@@ -16,6 +16,7 @@ const AppIcon: FC<AppIconProps> = ({
   background,
   className,
 }) => {
+  const src = '/imgs/sc-logo.png'
   return (
     <span
       className={classNames(
@@ -28,7 +29,7 @@ const AppIcon: FC<AppIconProps> = ({
         background,
       }}
     >
-      🤖
+      <img src={src} alt="" />
     </span>
   )
 }
