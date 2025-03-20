@@ -145,7 +145,7 @@ const Chat: FC<IChatProps> = ({
       </div>
       {
         !isHideSendInput && (
-          <div className={cn(!feedbackDisabled && '', 'fixed z-10 bottom-0 pb-4 !left-[244px] right-3.5')}
+          <div className={cn(!feedbackDisabled && '', 'fixed z-10 bottom-0 pt-4 pb-4 !left-[244px] right-3.5')}
             style={{ backgroundColor: '#ffffff' }}>
             <div className='relative p-[5.5px] max-w-[720px] mx-auto max-h-[150px] bg-white border-[1.5px] border-gray-200 rounded-xl overflow-y-auto'>
               {

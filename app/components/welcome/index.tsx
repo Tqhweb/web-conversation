@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import TemplateVarPanel, { PanelTitle, VarOpBtnGroup } from '../value-panel'
 import s from './style.module.css'
-import { AppInfoComp, ChatBtn, EditBtn, FootLogo, PromptTemplate } from './massive-component'
+import { AppInfoComp, ChatBtn, EditBtn, PromptTemplate } from './massive-component'
 import type { AppInfo, PromptConfig } from '@/types/app'
 import Toast from '@/app/components/base/toast'
 import Select from '@/app/components/base/select'
@@ -39,6 +39,7 @@ const Welcome: FC<IWelcomeProps> = ({
   const { t } = useTranslation()
   const hasVar = promptConfig.prompt_variables.length > 0
   const [isFold, setIsFold] = useState<boolean>(true)
+  const [isEdit, setIsEdit] = useState<boolean>(false)
   const [inputs, setInputs] = useState<Record<string, any>>((() => {
     if (hasSetInputs)
       return savedInputs
@@ -51,6 +52,10 @@ const Welcome: FC<IWelcomeProps> = ({
     }
     return res
   })())
+  const editBtnClick = () => {
+    setIsFold(false)
+    setIsEdit(true)
+  }
   useEffect(() => {
     if (!savedInputs) {
       const res: Record<string, any> = {}
@@ -216,10 +221,12 @@ const Welcome: FC<IWelcomeProps> = ({
 
           onInputsChange(inputs)
           setIsFold(true)
+          setIsEdit(false)
         }}
         onCancel={() => {
           setInputs(savedInputs)
           setIsFold(true)
+          setIsEdit(false)
         }}
       />
     )
@@ -246,6 +253,7 @@ const Welcome: FC<IWelcomeProps> = ({
     return (
       <TemplateVarPanel
         isFold={isFold}
+        isEdit={isEdit}
         header={
           <>
             <PanelTitle
@@ -275,13 +283,14 @@ const Welcome: FC<IWelcomeProps> = ({
     return (
       <TemplateVarPanel
         isFold={isFold}
+        isEdit={isEdit}
         header={
           <div className='flex items-center justify-between text-indigo-600'>
             <PanelTitle
               title={!isFold ? t('app.chat.privatePromptConfigTitle') : t('app.chat.configStatusDes')}
             />
             {isFold && (
-              <EditBtn onClick={() => setIsFold(false)} />
+              <EditBtn onClick={editBtnClick} />
             )}
           </div>
         }
@@ -295,23 +304,22 @@ const Welcome: FC<IWelcomeProps> = ({
   const renderHasSetInputs = () => {
     if ((!isPublicVersion && !canEditInputs) || !hasVar)
       return null
-
     return (
       <div
-        className='pt-[88px] mb-5'
+        className='pt-[68px] mb-5'
       >
         {isPublicVersion ? renderHasSetInputsPublic() : renderHasSetInputsPrivate()}
       </div>)
   }
 
   return (
-    <div className='relative mobile:min-h-[48px] tablet:min-h-[64px]'>
+    <div className='relative mobile:min-h-[48px] tablet:min-h-[64px] w-full'>
       {hasSetInputs && renderHeader()}
       <div className='mx-auto pc:w-[794px] max-w-full mobile:w-full px-3.5'>
         {/*  Has't set inputs  */}
         {
           !hasSetInputs && (
-            <div className='mobile:pt-[72px] tablet:pt-[128px] pc:pt-[200px]'>
+            <div className='relative mobile:pt-[72px] tablet:pt-[128px] pc:pt-[200px]' style={{ transform: 'translateY(50%)' }}>
               {hasVar
                 ? (
                   renderVarPanel()
@@ -326,22 +334,6 @@ const Welcome: FC<IWelcomeProps> = ({
         {/* Has set inputs */}
         {hasSetInputs && renderHasSetInputs()}
 
-        {/* foot */}
-        {!hasSetInputs && (
-          <div className='mt-4 flex justify-between items-center h-8 text-xs text-gray-400'>
-
-            {siteInfo.privacy_policy
-              ? <div>{t('app.chat.privacyPolicyLeft')}
-                <a
-                  className='text-gray-500'
-                  href={siteInfo.privacy_policy}
-                  target='_blank'>{t('app.chat.privacyPolicyMiddle')}</a>
-                {t('app.chat.privacyPolicyRight')}
-              </div>
-              : <div>
-              </div>}
-          </div>
-        )}
       </div>
     </div >
   )

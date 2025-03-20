@@ -166,7 +166,7 @@ const Answer: FC<IAnswerProps> = ({
 
   return (
     <div key={id}>
-      <div className='flex items-start'>
+      <div className='flex flex-row items-start'>
         <div className={`${s.answerIcon} w-10 h-10 shrink-0`}>
           {isResponding
             && <div className={s.typeingIcon}>
@@ -174,7 +174,7 @@ const Answer: FC<IAnswerProps> = ({
             </div>
           }
         </div>
-        <div className={`${s.answerWrap}`}>
+        <div className={`${s.answerWrap}`} style={{ flex: 1, overflowX: 'auto' }}>
           <div className={`${s.answer} relative text-sm text-gray-900`}>
             <div className={`ml-2 py-3 px-4 bg-gray-100 rounded-tr-2xl rounded-b-2xl ${workflowProcess && 'min-w-[480px]'}`}>
               {(isResponding && (isAgentMode ? (!content && (agent_thoughts || []).filter(item => !!item.thought || !!item.tool).length === 0) : !content))
@@ -188,11 +188,6 @@ const Answer: FC<IAnswerProps> = ({
                   : (
                     <Markdown content={content} />
                   ))}
-            </div>
-            <div className='absolute top-[-14px] right-[-14px] flex flex-row justify-end gap-1'>
-              {!feedbackDisabled && !item.feedbackDisabled && renderItemOperation()}
-              {/* User feedback must be displayed */}
-              {!feedbackDisabled && renderFeedbackRating(feedback?.rating)}
             </div>
           </div>
         </div>

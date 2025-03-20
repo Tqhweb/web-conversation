@@ -12,6 +12,7 @@ export type ITemplateVarPanelProps = {
   header: ReactNode
   children?: ReactNode | null
   isFold: boolean
+  isEdit?: boolean
 }
 
 const TemplateVarPanel: FC<ITemplateVarPanelProps> = ({
@@ -19,9 +20,17 @@ const TemplateVarPanel: FC<ITemplateVarPanelProps> = ({
   header,
   children,
   isFold,
+  isEdit,
 }) => {
+  console.log('isPublicVersion====', isEdit)
+  const style = {
+    transform: isEdit ? 'translateY(100%)' : 'translateY(0)',
+    zIndex: 100,
+    position: 'relative',
+  }
   return (
-    <div className={cn(isFold ? 'border border-indigo-100' : s.boxShodow, className, 'rounded-xl ')}>
+    <div className={cn(isFold ? 'border border-indigo-100' : s.boxShodow, className, 'rounded-xl ')}
+      style={style}>
       {/* header */}
       <div
         className={cn(isFold && 'rounded-b-xl', 'rounded-t-xl px-6 py-4 bg-indigo-25 text-xs')}

@@ -45,6 +45,7 @@
 }
 
 .markdown-body {
+  overflow: auto;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   margin: 0;
@@ -246,9 +247,9 @@
   border-spacing: 0;
   border-collapse: collapse;
   display: block;
-  width: 100%;
-  max-width: 100%;
-  overflow: auto;
+  width: max-content;
+    // max-width: 100%;
+    //overflow: auto;
 }
 
 .markdown-body td,
